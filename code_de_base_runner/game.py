@@ -19,11 +19,11 @@ JUMP_SPEED = 200
 
 #Ecran start 
 
-BGstart = Actor("Image START")
+BGstart = Actor("start")
 def draw_start():
     BGstart.draw()
 
-    
+
 # hero initialisation
 
 hero = Actor("hero", anchor=('middle', 'bottom'))
