@@ -4,7 +4,8 @@ from argparse import Action
 from random import randint
 from pgzero.actor import Actor
 import pgzrun
-
+import pgzero.screen
+screen : pgzero.screen.Screen
 
 WIDTH = 800
 HEIGHT = 600
@@ -16,6 +17,13 @@ NUMBER_OF_BACKGROUND = 2
 GAME_SPEED = 100
 JUMP_SPEED = 200
 
+#Ecran start 
+
+BGstart = Actor("Image START")
+def draw_start():
+    BGstart.draw()
+
+    
 # hero initialisation
 
 hero = Actor("hero", anchor=('middle', 'bottom'))
