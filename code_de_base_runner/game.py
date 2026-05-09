@@ -4,6 +4,10 @@ from argparse import Action
 from random import randint
 from pgzero.actor import Actor
 import pgzrun
+import pgzero.screen
+screen : pgzero.screen.Screen
+import os
+os.environ["SDL_VIDEO_CENTERED"] = "1" 
 
 
 WIDTH = 800
@@ -16,11 +20,18 @@ NUMBER_OF_BACKGROUND = 2
 GAME_SPEED = 100
 JUMP_SPEED = 200
 
+running = True
+
 # hero initialisation
 
 hero = Actor("hero", anchor=('middle', 'bottom'))
 hero.pos = (64, GROUND)
 hero_speed = 0
+
+game_over_screen = Actor("game_over", anchor = ('middle','middle'))
+game_over_screen.pos = (400,300)
+game_over_screen.speed = 0
+
 
 # enemies initialisations
 
@@ -42,7 +53,7 @@ for n in range(NUMBER_OF_BACKGROUND):
     bg_t.pos = n * WIDTH, 0
     backgrounds_top.append(bg_t)
 
-
+    
 def draw():
     screen.clear()
 
@@ -56,6 +67,8 @@ def draw():
         box.draw()
 
     hero.draw()
+
+    
 
 
 def update(dt):
@@ -121,12 +134,32 @@ def update(dt):
 
 def on_key_down(key):
     global hero_speed
+    global pygame
+    global dt
 
     # jump
     if key == keys.SPACE and hero.pos[1] == GROUND:
 
         if hero_speed <= 0:
             hero_speed = JUMP_SPEED
-            
+
+    if key == keys.RETURN :
+        draw()
+        #update(dt)#help? dt not defined
+
+    if key == keys.ESCAPE :
+        pgzrun.sys.exit()
+
+
+
+def game_over(vies):
+
+    if vies == 0 : #ou alors mettre cette condition dans update plutot qu'ici? 
+        GAME_SPEED = 0
+        screen.fill("white")
+        screen.set_alpha(160)
+        game_over.draw()
+
 
 pgzrun.go()
+
